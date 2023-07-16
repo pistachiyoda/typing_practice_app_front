@@ -1,6 +1,7 @@
 import Head from "next/head";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Box, Container, Typography } from "@mui/material";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -22,7 +23,13 @@ export default function Home() {
       <Head>
         <title>US Keyborad typing practice app</title>
       </Head>
-      <h1>{data}</h1>
+      <Container maxWidth="lg">
+        <Box sx={{ my: 4 }}>
+          <Typography variant="h2" component="h1" gutterBottom>
+            US Keyborad typing practice app
+          </Typography>
+        </Box>
+      </Container>
     </>
   );
 }
