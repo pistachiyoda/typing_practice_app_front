@@ -1,6 +1,6 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 
-export const Auth = () => {
+export const Auth: React.FC = () => {
   return (
     <>
       <Stack direction="row" spacing={2}>

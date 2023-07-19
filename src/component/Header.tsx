@@ -1,8 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Auth } from "./Auth";
 import { useRouter } from "next/router";
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const router = useRouter();
   const isHome = router.pathname === "/";
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Layout } from "@/component/Layout";
 import { Stack, TextField, Box, Button } from "@mui/material";
 import Router from "next/router";
@@ -41,9 +41,9 @@ export default function Home() {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
+            withCredentials: true,
           }
         );
-        document.cookie = `jwt_token=${jwt_token.data}`;
       } catch (error) {
         console.log(error);
       }
