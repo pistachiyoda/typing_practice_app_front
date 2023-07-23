@@ -7,6 +7,7 @@ export const Auth: React.FC = () => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -65,8 +66,15 @@ export const Auth: React.FC = () => {
 
   // ページがマウントされた後に実行される処理を記述
   useEffect(() => {
-    setUserInfo();
+    const fetchData = async () => {
+      setIsLoading(true);
+      await setUserInfo();
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
+
+  if (isLoading) return <div>loading...</div>;
 
   return (
     <>
