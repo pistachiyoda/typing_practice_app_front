@@ -52,6 +52,20 @@ export const Auth: React.FC = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const logout = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      console.log("logout!");
+      setIsLogin(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const setUserInfo = async () => {
     try {
       const userInfo = await getUserInfo();
@@ -79,9 +93,16 @@ export const Auth: React.FC = () => {
   return (
     <>
       {isLogin ? (
-        <Typography variant="h6" component="h2" gutterBottom>
-          {userName}
-        </Typography>
+        <>
+          <Stack direction="row" spacing={2}>
+            <Typography variant="h6" component="h2" gutterBottom>
+              {userName}
+            </Typography>
+            <Button variant="contained" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Stack>
+        </>
       ) : (
         <>
           <Stack direction="row" spacing={2}>
