@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Layout } from "@/component/Layout";
+import { LessonSelect } from "@/component/LessonSelect";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -20,7 +21,7 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <div>test</div>
+        <LessonSelect></LessonSelect>
       </Layout>
     </>
   );

@@ -2,12 +2,14 @@ import { Box, Container, Typography } from "@mui/material";
 import { Header } from "./Header";
 import Head from "next/head";
 import { FC, ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
+  const theme = useTheme();
   return (
     <>
       <Head>
@@ -15,7 +17,12 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
       </Head>
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
-          <Typography variant="h2" component="h1" gutterBottom>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            color={theme.typography.h1.color}
+          >
             US Keyborad typing practice app
           </Typography>
         </Box>

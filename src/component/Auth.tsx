@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -94,22 +94,35 @@ export const Auth: React.FC = () => {
     <>
       {isLogin ? (
         <>
-          <Stack direction="row" spacing={2}>
-            <Typography variant="h6" component="h2" gutterBottom>
-              {userName}
-            </Typography>
-            <Button variant="contained" onClick={handleLogout}>
-              Logout
-            </Button>
+          <Stack direction="row" spacing={2} sx={{ mb: "30px" }}>
+            <Box display="flex" sx={{ justifyContent: "space-between" }}>
+              <Typography
+                variant="h6"
+                component="h2"
+                gutterBottom
+                sx={{ m: "10px" }}
+              >
+                {userName}
+              </Typography>
+              <Box display="flex" sx={{ gap: "20px" }}>
+                <Button variant="contained">Dashboard</Button>
+                <Button variant="contained">Setting</Button>
+                <Button variant="outlined" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Box>
+            </Box>
           </Stack>
         </>
       ) : (
         <>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} sx={{ mb: "30px" }}>
             <Button variant="contained" href="./signup">
               Sign up
             </Button>
-            <span>OR</span>
+            <Box display="flex" alignItems="center">
+              <span>OR</span>
+            </Box>
             <TextField
               id="foutlined-basic"
               label="email"
