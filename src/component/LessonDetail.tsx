@@ -1,11 +1,16 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useTheme } from "@mui/material/styles";
+import { useState } from "react";
+import { LessonModal } from "./LessonModal";
 
 export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
   lessonNumber,
 }) => {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const lessonTitles = [
     "Lesson1: Left Hand practice",
@@ -44,11 +49,13 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
               variant="contained"
               size="large"
               sx={{ fontSize: "2rem", width: "80%" }}
+              onClick={handleOpen}
             >
               Start
             </Button>
           </Box>
         </Stack>
+        <LessonModal open={open} handleClose={handleClose}></LessonModal>
       </Grid>
     </>
   );
