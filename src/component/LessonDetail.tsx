@@ -12,17 +12,92 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const lessonTitles = [
-    "Lesson1: Left Hand practice",
-    "Lesson2: Right Hand Practice",
-    "Lesson3: Both Hand practice",
-    "Lesson4: G and H Keys practice",
-    "Lesson5: Apostrophe Key practice",
-    "Lesson6: Shift Keys practice",
-    "Lesson7: Left Hnad Top Row practice",
-    "Lesson8: Right Hand Top Row practice",
-    "Lesson9: Left Hand Bottom Row practice",
-    "Lesson10: Right Hand Bottom Row practice",
+  // 各レッスンの情報をオブジェクトで定義しておく
+  const lessonInfo = [
+    {
+      lessonNumber: 1,
+      title: "Lesson1: Left Hand practice",
+      image: "/images/1.png",
+      keys: ["a", "s", "d", "f", " "],
+    },
+    {
+      lessonNumber: 2,
+      title: "Lesson2: Right Hand Practice",
+      image: "/images/2.png",
+      keys: ["j", "k", "l", ";", "space"],
+    },
+    {
+      lessonNumber: 3,
+      title: "Lesson3: Both Hand practice",
+      image: "/images/3.png",
+      keys: ["a", "s", "d", "f", "j", "k", "l", ";", "space"],
+    },
+    {
+      lessonNumber: 4,
+      title: "Lesson4: G and H Keys practice",
+      image: "/images/4.png",
+      keys: ["a", "s", "d", "f", "j", "k", "l", "g", "h", ";", "space"],
+    },
+    {
+      lessonNumber: 5,
+      title: "Lesson5: Apostrophe Key practice",
+      image: "/images/5.png",
+      keys: ["a", "s", "d", "f", "j", "k", "l", "g", "h", ";", "'", "space"],
+    },
+    {
+      lessonNumber: 6,
+      title: "Lesson6: Shift Keys practice",
+      image: "/images/6.png",
+      keys: [
+        "a",
+        "s",
+        "d",
+        "f",
+        "j",
+        "k",
+        "l",
+        "g",
+        "h",
+        "A",
+        "S",
+        "D",
+        "F",
+        "J",
+        "K",
+        "L",
+        "G",
+        "H",
+        ";",
+        ";",
+        "'",
+        '"',
+        "space",
+      ],
+    },
+    {
+      lessonNumber: 7,
+      title: "Lesson7: Left Hnad Top Row practice",
+      image: "/images/7.png",
+      keys: ["a"],
+    },
+    {
+      lessonNumber: 8,
+      title: "Lesson8: Right Hand Top Row practice",
+      image: "/images/8.png",
+      keys: ["a"],
+    },
+    {
+      lessonNumber: 9,
+      title: "Lesson9: Left Hand Bottom Row practice",
+      image: "/images/9.png",
+      keys: ["a"],
+    },
+    {
+      lessonNumber: 10,
+      title: "Lesson10: Right Hand Bottom Row practice",
+      image: "/images/10.png",
+      keys: ["a"],
+    },
   ];
 
   return (
@@ -34,7 +109,7 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
           color={theme.typography.h2.color}
           gutterBottom
         >
-          {lessonTitles[lessonNumber - 1]}
+          {lessonInfo[lessonNumber - 1].title}
         </Typography>
         <Stack spacing={2} direction="column">
           <Image
@@ -55,7 +130,11 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
             </Button>
           </Box>
         </Stack>
-        <LessonModal open={open} handleClose={handleClose}></LessonModal>
+        <LessonModal
+          open={open}
+          handleClose={handleClose}
+          lessonInfo={lessonInfo[lessonNumber - 1]}
+        ></LessonModal>
       </Grid>
     </>
   );
