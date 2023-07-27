@@ -234,8 +234,8 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
           open={open}
           handleClose={handleClose}
           lessonInfo={lessonInfo[lessonNumber - 1]}
-          randomString={generateRandomString(
-            10,
+          randomStrings={generateRandomString(
+            54,
             lessonInfo[lessonNumber - 1].keys
           )}
         ></LessonModal>
