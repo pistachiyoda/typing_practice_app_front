@@ -48,25 +48,12 @@ export const LessonModal: React.FC<{
   open: boolean;
   handleClose: () => void;
   lessonInfo: LessonInfo;
-}> = ({ open, handleClose, lessonInfo }) => {
+  randomString: string[];
+}> = ({ open, handleClose, lessonInfo, randomString }) => {
   const { lessonNumber, keys } = lessonInfo;
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
-  const [randomString, setRandomString] = useState<string[]>([]);
   const [wrongKey, setWrongKey] = useState<string | null>(null);
-
-  const generateRandomString = (length: number, keys: string[]): string[] => {
-    let result: string[] = [];
-    const keysLength = keys.length;
-
-    // ２回実行される、なぜ？
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * keysLength);
-      result.push(keys[randomIndex]);
-    }
-    // console.log(result);
-    return result;
-  };
 
   const checkInputKey = (inputKey: string, currentKey: string) => {
     if (inputKey === currentKey) {
@@ -80,12 +67,6 @@ export const LessonModal: React.FC<{
       }, 500);
     }
   };
-
-  useEffect(() => {
-    const randomString = generateRandomString(10, keys);
-    console.log(randomString);
-    setRandomString(randomString);
-  }, []);
 
   useEffect(() => {
     console.log("useEffect");
@@ -113,13 +94,16 @@ export const LessonModal: React.FC<{
                   {index < currentKeyIndex ? (
                     <Typography
                       key={index}
-                      sx={{ fontSize: "100px", color: "#BFBFBF" }}
+                      sx={{
+                        fontSize: "100px",
+                        color: "#BFBFBF",
+                      }}
                     >
-                      {key === " " ? <>&nbsp;</> : key}
+                      {key === " " ? <>□</> : key}
                     </Typography>
                   ) : (
                     <Typography key={index} sx={{ fontSize: "100px" }}>
-                      {key === " " ? <>&nbsp;</> : key}
+                      {key === " " ? <>□</> : key}
                     </Typography>
                   )}
                 </>
