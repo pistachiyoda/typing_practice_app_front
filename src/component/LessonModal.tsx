@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { Stack, SxProps, Typography } from "@mui/material";
+import { Button, Stack, SxProps, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const style: SxProps = {
@@ -49,8 +49,15 @@ export const LessonModal: React.FC<{
   handleClose: () => void;
   lessonInfo: LessonInfo;
   randomStrings: string[];
-}> = ({ open, handleClose, lessonInfo, randomStrings }) => {
+  handleEnd: () => void;
+  timer: () => number;
+}> = ({ open, handleClose, lessonInfo, randomStrings, handleEnd, timer }) => {
   const { lessonNumber, keys } = lessonInfo;
+  const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
+  const [wrongKey, setWrongKey] = useState<string | null>(null);
+  const [currentStringsIndex, setCurrentStringsIndex] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
+  const [missCount, setMissCount] = useState(0);
 
   const splitedRandomStrings: string[][] = randomStrings.reduce(
     (result: string[][], item: string, index: number) => {
@@ -66,22 +73,33 @@ export const LessonModal: React.FC<{
     []
   );
 
-  const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
-  const [wrongKey, setWrongKey] = useState<string | null>(null);
-  const [currentStringsIndex, setCurrentStringsIndex] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
-
   const checkInputKey = (inputKey: string, currentKey: string) => {
     if (inputKey === currentKey) {
       console.log("correct!");
       setCurrentKeyIndex((prev) => prev + 1);
     } else {
       console.log("wrong!");
+      setMissCount((prev) => prev + 1);
       setWrongKey(inputKey);
       setTimeout(() => {
         setWrongKey(null);
       }, 500);
     }
+  };
+
+  const retryLesson = () => {
+    setCurrentKeyIndex(0);
+    setCurrentStringsIndex(0);
+    setMissCount(0);
+    setIsEnd(false);
+  };
+
+  const endLesson = () => {
+    setCurrentKeyIndex(0);
+    setCurrentStringsIndex(0);
+    setMissCount(0);
+    setIsEnd(false);
+    handleClose();
   };
 
   const showEndModal = () => {
@@ -103,6 +121,7 @@ export const LessonModal: React.FC<{
       if (currentStringsIndex === 3 && currentKeyIndex === 12) {
         setIsEnd(true);
         showEndModal();
+        handleEnd();
       }
       if (currentKeyIndex === 13) {
         setCurrentKeyIndex(0);
@@ -119,6 +138,7 @@ export const LessonModal: React.FC<{
     splitedRandomStrings,
     keys,
     lessonNumber,
+    handleEnd,
   ]);
 
   return (
@@ -127,7 +147,26 @@ export const LessonModal: React.FC<{
         <Box sx={wrongKey ? wrongStyle : style}>
           {isEnd ? (
             <>
-              <div>end!</div>
+              <Stack direction="column">
+                <Typography fontSize={"30px"}>ミス数: {missCount}</Typography>
+                <Typography fontSize={"30px"}>
+                  正答率: {56 / 56 + missCount}
+                </Typography>
+                <Typography fontSize={"30px"}>
+                  タイム: {timer().toFixed(2)}秒
+                </Typography>
+                <Typography fontSize={"30px"}>
+                  速さ: {(56 / timer()).toFixed(2)}文字/秒
+                </Typography>
+                <Stack direction="row" spacing={3} mt={4}>
+                  <Button variant="outlined" size="large" onClick={retryLesson}>
+                    もう一回練習する
+                  </Button>
+                  <Button variant="contained" size="large" onClick={endLesson}>
+                    終了
+                  </Button>
+                </Stack>
+              </Stack>
             </>
           ) : (
             <>

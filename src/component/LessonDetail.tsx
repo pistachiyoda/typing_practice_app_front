@@ -11,6 +11,20 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
+
+  const handleStart = () => {
+    setStartTime(Date.now());
+  };
+
+  const handleEnd = () => {
+    setEndTime(Date.now());
+  };
+
+  const timer = () => {
+    return (endTime - startTime) / 1000;
+  };
 
   // 各レッスンの情報をオブジェクトで定義しておく
   const spaceKey = " ";
@@ -224,7 +238,9 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
               variant="contained"
               size="large"
               sx={{ fontSize: "2rem", width: "80%" }}
-              onClick={handleOpen}
+              onClick={() => {
+                handleOpen(), handleStart();
+              }}
             >
               Start
             </Button>
@@ -238,6 +254,8 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
             56,
             lessonInfo[lessonNumber - 1].keys
           )}
+          handleEnd={handleEnd}
+          timer={timer}
         ></LessonModal>
       </Grid>
     </>
