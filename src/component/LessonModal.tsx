@@ -74,6 +74,7 @@ export const LessonModal: React.FC<{
   );
 
   const checkInputKey = (inputKey: string, currentKey: string) => {
+    if (inputKey === "Shift") return;
     if (inputKey === currentKey) {
       console.log("correct!");
       setCurrentKeyIndex((prev) => prev + 1);
@@ -118,7 +119,7 @@ export const LessonModal: React.FC<{
         e.key,
         splitedRandomStrings[currentStringsIndex][currentKeyIndex]
       );
-      if (currentStringsIndex === 3 && currentKeyIndex === 12) {
+      if (currentStringsIndex === 3 && currentKeyIndex === 13) {
         setIsEnd(true);
         showEndModal();
         handleEnd();
