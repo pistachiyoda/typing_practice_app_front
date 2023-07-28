@@ -3,6 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import { LessonButton } from "./LessonButton";
 import { LessonDetail } from "./LessonDetail";
 import { useState } from "react";
+import lessonInfo from "@/data/lessonInfo";
 
 export const LessonSelect: React.FC = () => {
   const theme = useTheme();
@@ -11,17 +12,14 @@ export const LessonSelect: React.FC = () => {
   return (
     <Grid container spacing={2}>
       <Grid item>
-        <Stack spacing={2} direction="column" sx={{ mr: "10px" }}>
-          <LessonButton lessonNumber={1} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={2} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={3} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={4} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={5} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={6} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={7} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={8} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={9} setLessonNumber={setLessonNumber} />
-          <LessonButton lessonNumber={10} setLessonNumber={setLessonNumber} />
+        <Stack spacing={1} direction="column" sx={{ mr: "10px" }}>
+          {lessonInfo.map((lesson, index) => (
+            <LessonButton
+              key={index}
+              lessonNumber={index + 1}
+              setLessonNumber={setLessonNumber}
+            ></LessonButton>
+          ))}
         </Stack>
       </Grid>
       <LessonDetail lessonNumber={lessonNumber}></LessonDetail>]

@@ -12,7 +12,7 @@ export const LessonButton: React.FC<{
     <Button
       variant="contained"
       color="secondary"
-      size="large"
+      size="medium"
       onClick={() => selectLesson(lessonNumber)}
     >
       Lesson {lessonNumber}
