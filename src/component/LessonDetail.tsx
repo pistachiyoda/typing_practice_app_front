@@ -14,15 +14,15 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
 
-  const handleStart = () => {
+  const startTimer = () => {
     setStartTime(Date.now());
   };
 
-  const handleEnd = () => {
+  const endTimer = () => {
     setEndTime(Date.now());
   };
 
-  const timer = () => {
+  const calcTime = () => {
     return (endTime - startTime) / 1000;
   };
 
@@ -239,7 +239,7 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
               size="large"
               sx={{ fontSize: "2rem", width: "80%" }}
               onClick={() => {
-                handleOpen(), handleStart();
+                handleOpen(), startTimer();
               }}
             >
               Start
@@ -254,8 +254,9 @@ export const LessonDetail: React.FC<{ lessonNumber: number }> = ({
             56,
             lessonInfo[lessonNumber - 1].keys
           )}
-          handleEnd={handleEnd}
-          timer={timer}
+          startTimer={startTimer}
+          endTimer={endTimer}
+          calcTime={calcTime}
         ></LessonModal>
       </Grid>
     </>

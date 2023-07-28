@@ -49,9 +49,18 @@ export const LessonModal: React.FC<{
   handleClose: () => void;
   lessonInfo: LessonInfo;
   randomStrings: string[];
-  handleEnd: () => void;
-  timer: () => number;
-}> = ({ open, handleClose, lessonInfo, randomStrings, handleEnd, timer }) => {
+  startTimer: () => void;
+  endTimer: () => void;
+  calcTime: () => number;
+}> = ({
+  open,
+  handleClose,
+  lessonInfo,
+  randomStrings,
+  startTimer,
+  endTimer,
+  calcTime,
+}) => {
   const { lessonNumber, keys } = lessonInfo;
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [wrongKey, setWrongKey] = useState<string | null>(null);
@@ -92,6 +101,7 @@ export const LessonModal: React.FC<{
     setCurrentKeyIndex(0);
     setCurrentStringsIndex(0);
     setMissCount(0);
+    startTimer();
     setIsEnd(false);
   };
 
@@ -122,7 +132,7 @@ export const LessonModal: React.FC<{
       if (currentStringsIndex === 3 && currentKeyIndex === 13) {
         setIsEnd(true);
         showEndModal();
-        handleEnd();
+        endTimer();
       }
       if (currentKeyIndex === 13) {
         setCurrentKeyIndex(0);
@@ -139,7 +149,7 @@ export const LessonModal: React.FC<{
     splitedRandomStrings,
     keys,
     lessonNumber,
-    handleEnd,
+    endTimer,
   ]);
 
   return (
@@ -154,10 +164,10 @@ export const LessonModal: React.FC<{
                   正答率: {56 / 56 + missCount}
                 </Typography>
                 <Typography fontSize={"30px"}>
-                  タイム: {timer().toFixed(2)}秒
+                  タイム: {calcTime().toFixed(2)}秒
                 </Typography>
                 <Typography fontSize={"30px"}>
-                  速さ: {(56 / timer()).toFixed(2)}文字/秒
+                  速さ: {(56 / calcTime()).toFixed(2)}文字/秒
                 </Typography>
                 <Stack direction="row" spacing={3} mt={4}>
                   <Button variant="outlined" size="large" onClick={retryLesson}>
