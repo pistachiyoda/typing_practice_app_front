@@ -125,10 +125,13 @@ export const LessonModal: React.FC<{
       console.log("current key index:", currentKeyIndex);
       console.log("current key: ", splitedRandomStrings[currentKeyIndex]);
       console.log("input key:", e.key);
-      checkInputKey(
-        e.key,
-        splitedRandomStrings[currentStringsIndex][currentKeyIndex]
-      );
+      if (currentStringsIndex <= 3 && currentKeyIndex <= 13) {
+        checkInputKey(
+          e.key,
+          splitedRandomStrings[currentStringsIndex][currentKeyIndex]
+        );
+      }
+
       if (currentStringsIndex === 3 && currentKeyIndex === 13) {
         setIsEnd(true);
         showEndModal();
