@@ -2,10 +2,12 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const Auth: React.FC = () => {
+export const Auth: React.FC<{
+  isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
+}> = ({ isLogin, setIsLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 

@@ -4,11 +4,11 @@ import Head from "next/head";
 import { FC, ReactNode } from "react";
 import { useTheme } from "@mui/material/styles";
 
-interface LayoutProps {
+export const Layout: FC<{
   children: ReactNode;
-}
-
-export const Layout: FC<LayoutProps> = ({ children }) => {
+  isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
+}> = ({ children, isLogin, setIsLogin }) => {
   const theme = useTheme();
   return (
     <>
@@ -26,7 +26,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             US Keyborad typing practice app
           </Typography>
         </Box>
-        <Header />
+        <Header isLogin={isLogin} setIsLogin={setIsLogin} />
         <main>{children}</main>
       </Container>
     </>

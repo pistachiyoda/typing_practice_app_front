@@ -5,7 +5,7 @@ import { LessonDetail } from "./LessonDetail";
 import { useState } from "react";
 import lessonInfo from "@/data/lessonInfo";
 
-export const LessonSelect: React.FC = () => {
+export const LessonSelect: React.FC<{ isLogin: boolean }> = ({ isLogin }) => {
   const theme = useTheme();
   const [lessonNumber, setLessonNumber] = useState(1);
 
@@ -22,7 +22,10 @@ export const LessonSelect: React.FC = () => {
           ))}
         </Stack>
       </Grid>
-      <LessonDetail lessonNumber={lessonNumber}></LessonDetail>]
+      <LessonDetail
+        lessonNumber={lessonNumber}
+        isLogin={isLogin}
+      ></LessonDetail>
     </Grid>
   );
 };

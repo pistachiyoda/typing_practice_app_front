@@ -5,6 +5,7 @@ import { LessonSelect } from "@/component/LessonSelect";
 
 export default function Home() {
   const [data, setData] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +21,8 @@ export default function Home() {
   }, []);
   return (
     <>
-      <Layout>
-        <LessonSelect></LessonSelect>
+      <Layout isLogin={isLogin} setIsLogin={setIsLogin}>
+        <LessonSelect isLogin={isLogin}></LessonSelect>
       </Layout>
     </>
   );
