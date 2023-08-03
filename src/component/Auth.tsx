@@ -1,6 +1,15 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import HomeIcon from "@mui/icons-material/Home";
+import { useRouter } from "next/router";
 
 export const Auth: React.FC<{
   isLogin: boolean;
@@ -56,6 +65,11 @@ export const Auth: React.FC<{
     }
   };
 
+  const router = useRouter();
+  const handleHomeClick = () => {
+    router.push("/");
+  };
+
   // ページがマウントされた後に実行される処理を記述
   useEffect(() => {
     const fetchData = async () => {
@@ -74,15 +88,10 @@ export const Auth: React.FC<{
         <>
           <Stack direction="row" spacing={2} sx={{ mb: "30px" }}>
             <Box display="flex" sx={{ justifyContent: "space-between" }}>
-              <Typography
-                variant="h6"
-                component="h2"
-                gutterBottom
-                sx={{ m: "10px" }}
-              >
-                {userName}
-              </Typography>
               <Box display="flex" sx={{ gap: "20px" }}>
+                <IconButton onClick={handleHomeClick}>
+                  <HomeIcon sx={{ fontSize: "44px" }} />
+                </IconButton>
                 <Button variant="contained" href="./dashboard">
                   Dashboard
                 </Button>
