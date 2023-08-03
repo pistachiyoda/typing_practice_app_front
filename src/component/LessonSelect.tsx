@@ -8,7 +8,7 @@ export const LessonSelect: React.FC<{
   setLessonNumber: Dispatch<SetStateAction<number>>;
 }> = ({ children, setLessonNumber }) => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       <Grid item>
         <Stack spacing={1} direction="column" sx={{ mr: "10px" }}>
           {lessonInfo.map((lesson, index) => (

@@ -7,7 +7,6 @@ export const Header: React.FC = () => {
   const router = useRouter();
   const isSignup = router.pathname === "/signup";
   const [isLogin, setIsLogin] = useState(false);
-  const [userName, setUserName] = useState("");
 
   // userInfoがnullだったらログインしていない
   const getUserInfo = () => {
@@ -29,7 +28,6 @@ export const Header: React.FC = () => {
       if (userInfo) setIsLogin(true);
       if (!userInfo) return;
       console.log(userInfo.data.email);
-      setUserName(userInfo.data.email);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +41,6 @@ export const Header: React.FC = () => {
             isLogin={isLogin}
             setIsLogin={setIsLogin}
             setUserInfo={setUserInfo}
-            userName={userName}
           />
         </>
       ) : (

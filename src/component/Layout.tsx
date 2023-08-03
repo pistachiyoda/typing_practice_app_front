@@ -16,7 +16,7 @@ export const Layout: FC<{
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
           <Typography
-            variant="h2"
+            variant="h3"
             component="h1"
             gutterBottom
             color={theme.typography.h1.color}

@@ -15,11 +15,11 @@ export const Auth: React.FC<{
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
   setUserInfo: () => void;
-  userName: string;
-}> = ({ isLogin, setIsLogin, setUserInfo, userName }) => {
+}> = ({ isLogin, setIsLogin, setUserInfo }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -60,12 +60,12 @@ export const Auth: React.FC<{
       );
       console.log("logout!");
       setIsLogin(false);
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const router = useRouter();
   const handleHomeClick = () => {
     router.push("/");
   };
@@ -90,7 +90,7 @@ export const Auth: React.FC<{
             <Box display="flex" sx={{ justifyContent: "space-between" }}>
               <Box display="flex" sx={{ gap: "20px" }}>
                 <IconButton onClick={handleHomeClick}>
-                  <HomeIcon sx={{ fontSize: "44px" }} />
+                  <HomeIcon sx={{ fontSize: "36px" }} />
                 </IconButton>
                 <Button variant="contained" href="./dashboard">
                   Dashboard

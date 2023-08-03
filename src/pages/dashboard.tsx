@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { User } from "@prisma/client";
+import { Stack, Typography } from "@mui/material";
 
 interface lessonResult {
   createdAt: string;
@@ -40,6 +41,7 @@ interface lessonResultData {
 export default function Home() {
   const [lessonNumber, setLessonNumber] = useState(1);
   const [data, setData] = useState<lessonResultData | undefined>();
+  const [userEmail, setUserEmail] = useState<string | undefined>();
 
   ChartJS.register(
     CategoryScale,
@@ -69,7 +71,10 @@ export default function Home() {
           `${process.env.NEXT_PUBLIC_API_URL}/lesson/${lessonNumber}`,
           { withCredentials: true }
         );
-        console.log(res.data);
+        if (res.data.length === 0) {
+          setData(undefined);
+          return;
+        }
 
         const labels: string[] = res.data.map(
           (result: lessonResult) => result.createdAt
@@ -91,16 +96,58 @@ export default function Home() {
         console.log(error);
       }
     };
+
+    const getUserEmail = async () => {
+      try {
+        const userInfo = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+          { withCredentials: true }
+        );
+        if (userInfo) return setUserEmail(userInfo.data.email);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchData();
+    getUserEmail();
   }, [lessonNumber]);
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      try {
+        const userInfo = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
+          { withCredentials: true }
+        );
+        if (userInfo) setUserEmail(userInfo.data.email);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserEmail();
+  }, []);
 
   return (
     <>
       <Layout>
         <LessonSelect setLessonNumber={setLessonNumber}>
-          {data && ( // データが存在する場合にのみ Line コンポーネントを表示
-            <Line options={options} data={data} width={1000} height={424} />
-          )}
+          <Stack spacing={1} direction="column" sx={{ mb: "10px", ml: "20px" }}>
+            <Typography
+              variant="h5"
+              component="h2"
+              gutterBottom
+              sx={{ m: "10px" }}
+            >
+              {userEmail}さんのレッスン結果
+            </Typography>
+            {data ? ( // データが存在する場合にのみ Line コンポーネントを表示
+              <Line options={options} data={data} width={840} height={400} />
+            ) : (
+              <p>まだこのレッスンをしたことがありません。</p>
+            )}
+          </Stack>
         </LessonSelect>
       </Layout>
     </>
