@@ -7,8 +7,7 @@ import lessonInfo from "../data/lessonInfo";
 
 export const LessonDetail: React.FC<{
   lessonNumber: number;
-  isLogin: boolean;
-}> = ({ lessonNumber, isLogin }) => {
+}> = ({ lessonNumber }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -56,7 +55,7 @@ export const LessonDetail: React.FC<{
           <Image
             src={`/images/${lessonNumber}.png`}
             width={1000}
-            height={423}
+            height={424}
             alt="us_keyboard"
           />
 
@@ -84,7 +83,6 @@ export const LessonDetail: React.FC<{
           startTimer={startTimer}
           endTimer={endTimer}
           calcTime={calcTime}
-          isLogin={isLogin}
         ></LessonModal>
       </Grid>
     </>

@@ -53,7 +53,6 @@ export const LessonModal: React.FC<{
   startTimer: () => void;
   endTimer: () => void;
   calcTime: () => number;
-  isLogin: boolean;
 }> = ({
   open,
   handleClose,
@@ -62,7 +61,6 @@ export const LessonModal: React.FC<{
   startTimer,
   endTimer,
   calcTime,
-  isLogin,
 }) => {
   const { lessonNumber, keys } = lessonInfo;
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
@@ -100,7 +98,7 @@ export const LessonModal: React.FC<{
     }
   };
 
-  const sendLessonResult = () => {
+  const sendLessonResult = async () => {
     try {
       const result = {
         lessonNo: lessonNumber,
@@ -108,7 +106,7 @@ export const LessonModal: React.FC<{
         time: parseFloat(calcTime().toFixed(2)),
         speed: parseFloat((56 / calcTime()).toFixed(2)),
       };
-      const ret = axios.post(
+      const ret = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/lesson/result`,
         result,
         {
@@ -120,13 +118,17 @@ export const LessonModal: React.FC<{
     }
   };
 
-  const retryLesson = () => {
+  const retryLesson = async () => {
     setCurrentKeyIndex(0);
     setCurrentStringsIndex(0);
     setMissCount(0);
     startTimer();
     setIsEnd(false);
-    isLogin ? sendLessonResult() : console.log("not login");
+    try {
+      sendLessonResult();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const endLesson = () => {
@@ -135,7 +137,11 @@ export const LessonModal: React.FC<{
     setMissCount(0);
     setIsEnd(false);
     handleClose();
-    isLogin ? sendLessonResult() : console.log("not login");
+    try {
+      sendLessonResult();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const showEndModal = () => {

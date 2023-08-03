@@ -6,9 +6,7 @@ import { useTheme } from "@mui/material/styles";
 
 export const Layout: FC<{
   children: ReactNode;
-  isLogin: boolean;
-  setIsLogin: (isLogin: boolean) => void;
-}> = ({ children, isLogin, setIsLogin }) => {
+}> = ({ children }) => {
   const theme = useTheme();
   return (
     <>
@@ -26,7 +24,7 @@ export const Layout: FC<{
             US Keyborad typing practice app
           </Typography>
         </Box>
-        <Header isLogin={isLogin} setIsLogin={setIsLogin} />
+        <Header />
         <main>{children}</main>
       </Container>
     </>

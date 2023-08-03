@@ -1,14 +1,12 @@
 import { Grid, Stack } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { LessonButton } from "./LessonButton";
-import { LessonDetail } from "./LessonDetail";
-import { useState } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import lessonInfo from "@/data/lessonInfo";
 
-export const LessonSelect: React.FC<{ isLogin: boolean }> = ({ isLogin }) => {
-  const theme = useTheme();
-  const [lessonNumber, setLessonNumber] = useState(1);
-
+export const LessonSelect: React.FC<{
+  children: ReactNode;
+  setLessonNumber: Dispatch<SetStateAction<number>>;
+}> = ({ children, setLessonNumber }) => {
   return (
     <Grid container spacing={2}>
       <Grid item>
@@ -22,10 +20,7 @@ export const LessonSelect: React.FC<{ isLogin: boolean }> = ({ isLogin }) => {
           ))}
         </Stack>
       </Grid>
-      <LessonDetail
-        lessonNumber={lessonNumber}
-        isLogin={isLogin}
-      ></LessonDetail>
+      {children}
     </Grid>
   );
 };

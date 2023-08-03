@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model LessonResult {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  userId    Int
+  lessonNo  Int
+  missCount Int
+  time      Float
+  speed     Float
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "LessonResult_userId_fkey")
+}
+
+model User {
+  id             Int            @id @default(autoincrement())
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime
+  email          String         @unique
+  hashedPassword String
+  LessonResult   LessonResult[]
+}

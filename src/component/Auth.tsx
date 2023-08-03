@@ -5,10 +5,11 @@ import axios from "axios";
 export const Auth: React.FC<{
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
-}> = ({ isLogin, setIsLogin }) => {
+  setUserInfo: () => void;
+  userName: string;
+}> = ({ isLogin, setIsLogin, setUserInfo, userName }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const handleEmailChange = (e: any) => {
@@ -17,19 +18,6 @@ export const Auth: React.FC<{
 
   const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
-  };
-
-  // userInfoがnullだったらログインしていない
-  const getUserInfo = () => {
-    try {
-      const userInfo = axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
-        { withCredentials: true }
-      );
-      if (userInfo) return userInfo;
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleLogin = async () => {
@@ -68,18 +56,6 @@ export const Auth: React.FC<{
     }
   };
 
-  const setUserInfo = async () => {
-    try {
-      const userInfo = await getUserInfo();
-      if (userInfo) setIsLogin(true);
-      if (!userInfo) return;
-      console.log(userInfo.data.email);
-      setUserName(userInfo.data.email);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // ページがマウントされた後に実行される処理を記述
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +83,9 @@ export const Auth: React.FC<{
                 {userName}
               </Typography>
               <Box display="flex" sx={{ gap: "20px" }}>
-                <Button variant="contained">Dashboard</Button>
+                <Button variant="contained" href="./dashboard">
+                  Dashboard
+                </Button>
                 <Button variant="contained">Setting</Button>
                 <Button variant="outlined" onClick={handleLogout}>
                   Logout
