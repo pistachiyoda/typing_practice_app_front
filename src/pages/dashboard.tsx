@@ -14,19 +14,12 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { User } from "@prisma/client";
 import { Stack, Typography } from "@mui/material";
+import { LessonResult as ServerLessonResult } from "@prisma/client";
 
-interface lessonResult {
+type LessonResult = Omit<ServerLessonResult, "createdAt"> & {
   createdAt: string;
-  id: Number;
-  lessonNo: Number;
-  missCount: Number;
-  speed: Number;
-  time: Number;
-  userId: Number;
-  user: User;
-}
+};
 
 interface lessonResultData {
   labels: string[];
@@ -54,14 +47,33 @@ export default function Home() {
   );
 
   const options = {
-    responsive: false,
+    responsive: true,
+    interaction: {
+      mode: "index" as const,
+      intersect: false,
+    },
+    stacked: false,
     plugins: {
       title: {
         display: true,
-        text: "レッスン結果推移",
+        text: `レッスン${lessonNumber}`,
       },
     },
-    maintainAspectRatio: false,
+    scales: {
+      y: {
+        type: "linear" as const,
+        display: true,
+        position: "left" as const,
+      },
+      y1: {
+        type: "linear" as const,
+        display: true,
+        position: "right" as const,
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+    },
   };
 
   useEffect(() => {
@@ -76,18 +88,24 @@ export default function Home() {
           return;
         }
 
-        const labels: string[] = res.data.map(
-          (result: lessonResult) => result.createdAt
+        const labels: string[] = res.data.map((result: LessonResult) =>
+          new Date(result.createdAt).toLocaleString()
         );
 
         const newData = {
           labels,
           datasets: [
             {
-              label: "missCount",
-              data: res.data.map((result: lessonResult) => result.missCount),
+              label: "ミス回数",
+              data: res.data.map((result: LessonResult) => result.missCount),
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+            {
+              label: "文字/秒",
+              data: res.data.map((result: LessonResult) => result.speed),
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
             },
           ],
         };
@@ -142,7 +160,7 @@ export default function Home() {
             >
               {userEmail}さんのレッスン結果
             </Typography>
-            {data ? ( // データが存在する場合にのみ Line コンポーネントを表示
+            {data ? (
               <Line options={options} data={data} width={840} height={400} />
             ) : (
               <p>まだこのレッスンをしたことがありません。</p>
