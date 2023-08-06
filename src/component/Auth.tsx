@@ -95,7 +95,9 @@ export const Auth: React.FC<{
                 <Button variant="contained" href="./dashboard">
                   Dashboard
                 </Button>
-                <Button variant="contained">Setting</Button>
+                <Button variant="contained" href="./setting">
+                  Setting
+                </Button>
                 <Button variant="outlined" onClick={handleLogout}>
                   Logout
                 </Button>
